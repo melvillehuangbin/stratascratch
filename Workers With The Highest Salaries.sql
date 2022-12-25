@@ -1,17 +1,20 @@
--- we want to find the titles of workers that earn highest salary
--- output highest-paid title or multiplt titltes that share highest salary
--- 1. get title by joining worker to title table (inner join)
--- 2. use rank to keep the ranking (rank) of salaries
--- 3. select the number 1 rank salary (where)
+-- select * from worker;
+-- titles of workers that earn the highest salary
+-- highest-paid or multiple titles that share highest salary
 
-select
-    t1.worker_title as best_paid_title
+### 1st approach: window function ###
+-- 1. rank their salaries (rank, order by salary desc) to keep ranking
+-- 2. get title of worker (join)
+
+### 2nd approach: max ###
+-- 1. check salary = max(salary) (subquery + where)
+select distinct
+    t.worker_title
 from (
     select
-        t.worker_title,
-        rank() over(order by w.salary desc) as rank_salary
+        rank() over(order by w.salary desc) as salary_rank,
+        ti.worker_title
     from worker w
-    inner join title t on w.worker_id = t.worker_ref_id
-) t1
-where t1.rank_salary = 1
-
+    inner join title ti on w.worker_id = ti.worker_ref_id
+) t
+where t.salary_rank = 1
