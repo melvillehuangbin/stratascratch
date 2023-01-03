@@ -6,8 +6,8 @@
 -- 1. rank their salaries (rank, order by salary desc) to keep ranking
 -- 2. get title of worker (join)
 
-### 2nd approach: max ###
--- 1. check salary = max(salary) (subquery + where)
+### 2nd approach: max (tried)###
+-- 1. check salary = max(salary) (subquery + where) 
 select distinct
     t.worker_title
 from (
